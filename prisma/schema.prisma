@@ -11,3 +11,20 @@ generator client {
 datasource db {
   provider = "postgresql"
 }
+
+model Type {
+  id  Int @id @default(autoincrement())
+  name  String @unique //e.g. electric
+  url String
+  pokemons Pokemon[]
+
+}
+
+model Pokemon {
+  id  Int @id
+  name  String  @unique
+  height Int // decimetri
+  weight Int // ettogrammi
+  types Type[]
+  imageUrl String?
+}
