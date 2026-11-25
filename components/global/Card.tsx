@@ -1,18 +1,6 @@
-const Card = ({
-  id,
-  name,
-  imgUrl,
-  type,
-  height,
-  weight,
-}: {
-  id: number
-  name: string
-  imgUrl: string
-  type: string
-  height: number
-  weight: number
-}) => {
+import type { PokemonCard } from '@/lib/schemas'
+
+const Card = ({ id, name, imgUrl, types, height, weight }: PokemonCard) => {
   return (
     <div className="flex h-80 w-56 flex-col gap-2 rounded-xl border-4 border-amber-400 bg-card p-2 text-card-foreground shadow-md transition hover:-translate-y-1 hover:shadow-xl">
       {/* header: nome + numero */}
@@ -32,11 +20,16 @@ const Card = ({
         />
       </div>
 
-      {/* tipo */}
+      {/* tipi */}
       <div className="flex gap-1">
-        <span className="rounded-full bg-amber-500 px-3 py-0.5 text-xs font-semibold uppercase tracking-wide text-white">
-          {type}
-        </span>
+        {types.map((type) => (
+          <span
+            key={type}
+            className="rounded-full bg-amber-500 px-3 py-0.5 text-xs font-semibold uppercase tracking-wide text-white"
+          >
+            {type}
+          </span>
+        ))}
       </div>
 
       {/* statistiche */}

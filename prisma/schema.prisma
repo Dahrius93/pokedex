@@ -20,6 +20,8 @@ model Type {
 
 }
 
+// catalogo condiviso: un pokemon viene salvato una sola volta,
+// anche se è nel pokedex di più utenti
 model Pokemon {
   id  Int @id
   name  String  @unique
@@ -27,4 +29,18 @@ model Pokemon {
   weight Int // ettogrammi
   types Type[]
   imageUrl String?
+  owners UserPokemon[]
+}
+
+// pokemon posseduti da ogni utente (clerkId = userId di Clerk)
+model UserPokemon {
+  id        Int      @id @default(autoincrement())
+  clerkId   String
+  pokemonId Int
+  pokemon   Pokemon  @relation(fields: [pokemonId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  // stesso pokemon non può essere aggiunto due volte dallo stesso utente;
+  // l'indice copre anche le ricerche per solo clerkId
+  @@unique([clerkId, pokemonId])
 }
